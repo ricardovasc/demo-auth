@@ -7,14 +7,16 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+@Component
 public class JwtUtils {
 
-	private String SECRET_KEY = "secret";
+	private String SECRET_KEY = "@S3cr3t#";
 
 	public String extractUsername(String token) {
 		return extractClaim(token, Claims::getSubject);
@@ -43,10 +45,14 @@ public class JwtUtils {
 	}
 
 	private String createToken(Map<String, Object> claims, UserDetails userDetails) {
-		return Jwts.builder().setClaims(claims).setSubject(userDetails.getUsername())
-				.claim("authorities", userDetails.getAuthorities()).setIssuedAt(new Date(System.currentTimeMillis()))
+		return Jwts.builder()
+				.setClaims(claims)
+				.setSubject(userDetails.getUsername())
+				.claim("authorities", userDetails.getAuthorities())
+				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(1)))
-				.signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
+				.signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+				.compact();
 	}
 
 	public Boolean isTokenValid(String token, UserDetails userDetails) {

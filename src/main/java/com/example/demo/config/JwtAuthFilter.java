@@ -26,6 +26,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 	private static final String AUTHORIZATION = "Authorization";
 
 	private final UserDao userDao;
+	
 	private final JwtUtils jwtUtils;
 
 	@Override

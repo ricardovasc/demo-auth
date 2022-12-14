@@ -22,9 +22,9 @@ public class AuthController {
 	
 	private final AuthenticationManager authenticationManager;
 	
-	private UserDao userDao;
+	private final UserDao userDao;
 	
-	private JwtUtils jwtUtils;
+	private final JwtUtils jwtUtils;
 	
 	@PostMapping("/authenticate")
 	public ResponseEntity<String> auth(@RequestBody AuthenticationRequest request) {
